@@ -2,6 +2,7 @@ import re
 
 import numpy as np
 import pandas as pd
+from collection import load_data
 from sklearn.preprocessing import MultiLabelBinarizer as MLB
 
 
@@ -77,8 +78,9 @@ def get_energy_grades():
     return ordered_grades
 
 
-def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
+def prepare_data() -> pd.DataFrame:
     """Prepares dataset for machine learning training"""
+    df = load_data()
 
     # encode simple bool columns
     cols_to_encode = ["balcony", "storage", "parking", "furnished", "garage"]
