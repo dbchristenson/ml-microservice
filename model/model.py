@@ -7,8 +7,6 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 
 
 def get_X_y(df: pd.DataFrame, x_cols: list | None = None) -> tuple:
-    X_df, y_df = get_X_y(x_cols)
-
     if not x_cols:
         X_df = df.drop(columns=["rent"])
     if x_cols:
@@ -43,7 +41,7 @@ def evaluate_model(
 
 def save_model(model: RandomForestRegressor) -> None:
     # could add os create dir logic here
-    pk.dump(model, open("models/rf_v1", "wb"))
+    pk.dump(model, open("model/models/rf_v1", "wb"))
 
 
 def build_model(x_cols: list | None = None):
@@ -78,4 +76,3 @@ def build_model(x_cols: list | None = None):
 if __name__ == "__main__":
     print("building model")
     score = build_model()
-    print(f"model score: {score}")
