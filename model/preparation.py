@@ -1,9 +1,9 @@
 import re
 
-import numpy as np
+import numpy as np  # noqa E401
 import pandas as pd
 from collection import load_data
-from sklearn.preprocessing import MultiLabelBinarizer as MLB
+from sklearn.preprocessing import MultiLabelBinarizer as MLB  # noqa E401
 
 
 def handle_garden_column(x: pd.Series) -> int:
@@ -91,13 +91,21 @@ def prepare_data() -> pd.DataFrame:
     # garden
     df["garden"] = df.garden.map(handle_garden_column)
 
+    """
+    This code is commented out because it highly complicates the inputs
+    required from users to give the model to make a prediction. This would
+    mean a more robust way of passing data to the model is required. For
+    example passing a url to the apartment listing.
     # location
     df["neighborhood"] = df.neighborhood.map(handle_neighborhood_column)
     df = pd.get_dummies(df, columns=["neighborhood"], drop_first=True)
     df = df.drop(columns=["address", "zip"])  # non-interpretable locations
+    """
 
+    """
+    This functionality is commented out for the exact same reason as above.
     # facilities → sparse MLb
-    df["facility_list"] = df.facilities.str.split(r",\s*").apply(clean_fac)
+    df["facility_list"] = df.facilities.str.split(r",\s*").apply(clean_fac) # noqa W605
     mlb = MLB(sparse_output=True)  # scikit-learn ≥1.4
     fac_sparse = mlb.fit_transform(df.facility_list)
     fac_df = pd.DataFrame.sparse.from_spmatrix(
@@ -106,7 +114,10 @@ def prepare_data() -> pd.DataFrame:
     df = pd.concat([df, fac_df], axis=1)
     df["n_facilities"] = df.facility_list.str.len()
     df.drop(columns=["facility_list", "facilities"], inplace=True)
+    """
 
+    """
+    This functionality is commented out for the exact same reason as above.
     # energy
     ordered_grades = get_energy_grades()
     cat_type = pd.api.types.CategoricalDtype(
@@ -118,5 +129,11 @@ def prepare_data() -> pd.DataFrame:
     median_code = df.energy_code.median()
     df["energy_code"] = df.energy_code.fillna(median_code)
     df = df.drop(columns=["energy", "energy_cat"])
+    """
+
+    # drop unecessary columns
+    df = df.drop(
+        columns=["energy", "facilities", "neighborhood", "address", "zip"]
+    )
 
     return df
