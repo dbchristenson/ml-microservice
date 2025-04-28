@@ -84,9 +84,7 @@ def prepare_data() -> pd.DataFrame:
 
     # boolean columns → sparse one-hots
     bools = ["balcony", "storage", "parking", "furnished", "garage"]
-    df = pd.get_dummies(
-        df, columns=bools, drop_first=True, dtype="int8", sparse=True
-    )
+    df = pd.get_dummies(df, columns=bools, drop_first=True, dtype="int8")
 
     # garden
     df["garden"] = df.garden.map(handle_garden_column)
@@ -135,5 +133,7 @@ def prepare_data() -> pd.DataFrame:
     df = df.drop(
         columns=["energy", "facilities", "neighborhood", "address", "zip"]
     )
+
+    print(df.columns)
 
     return df

@@ -39,28 +39,24 @@ def evaluate_model(
     return score
 
 
-def save_model(model: RandomForestRegressor) -> None:
+def save_model(model: RandomForestRegressor, model_name: str) -> None:
     # could add os create dir logic here
-    pk.dump(model, open("model/models/rf_v1", "wb"))
+    pk.dump(model, open(f"model/models/{model_name}", "wb"))
 
 
-def build_model(x_cols: list | None = None):
+def build_model(x_cols: list | None = None, model_name: str = "rf_v1"):
     # load data
-    print("loading data")
     df = prepare_data()
 
     # split vars and target
-    print("splitting data")
     X_df, y_df = get_X_y(df, x_cols)
 
     # get tts
-    print("getting tts")
     X_train, X_test, y_train, y_test = train_test_split(
         X_df, y_df, train_size=0.8, test_size=0.2
     )
 
     # train
-    print("training")
     rf = train_model(X_train, y_train)
 
     # evaluate
@@ -68,7 +64,7 @@ def build_model(x_cols: list | None = None):
     print("Model Score: ", score)
 
     # save
-    save_model(rf)
+    save_model(rf, model_name=model_name)
 
     return score
 
