@@ -4,7 +4,7 @@ from pathlib import Path
 
 from sklearn.ensemble import RandomForestRegressor
 
-from model import build_model
+from model.model import build_model
 
 
 class ModelService:
