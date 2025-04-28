@@ -8,6 +8,17 @@ from model import build_model
 
 
 class ModelService:
+    """
+    Class to handle model service, loading, training, and predicting.
+
+    Attributes:
+        model: RandomForestRegressor
+
+    Methods:
+        load_model: Load the model from disk.
+        predict: Make predictions using the loaded model.
+    """
+
     def __init__(self):
         self.model = None
 
