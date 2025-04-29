@@ -1,9 +1,11 @@
 import pickle as pk
 
 import pandas as pd
-from preparation import prepare_data
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV, train_test_split
+
+from config import settings
+from model.preparation import prepare_data
 
 
 def get_X_y(df: pd.DataFrame, x_cols: list | None = None) -> tuple:
@@ -41,10 +43,12 @@ def evaluate_model(
 
 def save_model(model: RandomForestRegressor, model_name: str) -> None:
     # could add os create dir logic here
-    pk.dump(model, open(f"model/models/{model_name}", "wb"))
+    pk.dump(model, open(f"{settings.model_path}/{model_name}", "wb"))
 
 
-def build_model(x_cols: list | None = None, model_name: str = "rf_v1"):
+def build_model(
+    x_cols: list | None = None, model_name: str = settings.model_name
+):
     # load data
     df = prepare_data()
 

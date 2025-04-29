@@ -2,8 +2,9 @@ import re
 
 import numpy as np  # noqa E401
 import pandas as pd
-from collection import load_data
 from sklearn.preprocessing import MultiLabelBinarizer as MLB  # noqa E401
+
+from model.collection import load_data
 
 
 def handle_garden_column(x: pd.Series) -> int:
@@ -103,7 +104,7 @@ def prepare_data() -> pd.DataFrame:
     """
     This functionality is commented out for the exact same reason as above.
     # facilities → sparse MLb
-    df["facility_list"] = df.facilities.str.split(r",\s*").apply(clean_fac) # noqa W605
+    df["facility_list"] = df.facilities.str.split(r"REEXPHERE").apply(clean_fac) # noqa W605
     mlb = MLB(sparse_output=True)  # scikit-learn ≥1.4
     fac_sparse = mlb.fit_transform(df.facility_list)
     fac_df = pd.DataFrame.sparse.from_spmatrix(

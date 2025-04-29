@@ -4,6 +4,7 @@ from pathlib import Path
 
 from sklearn.ensemble import RandomForestRegressor
 
+from config import settings
 from model.model import build_model
 
 
@@ -22,12 +23,13 @@ class ModelService:
     def __init__(self):
         self.model = None
 
-    def load_model(self, model_name="rf_v1"):
-        model_base_path = "model/models"
-        model_path = Path(os.path.join(model_base_path, model_name))
+    def load_model(self):
+        model_path = Path(
+            os.path.join(settings.model_path, settings.model_name)
+        )
 
         if not model_path.exists():
-            build_model(model_name=model_name)
+            build_model(model_name=settings.model_name)
 
         self.model: RandomForestRegressor = pk.load(open(model_path, "rb"))
 
