@@ -1,6 +1,9 @@
+from loguru import logger
+
 from model.model_service import ModelService
 
 
+@logger.catch
 def main():
     ml_svc = ModelService()
     ml_svc.load_model()
