@@ -2,6 +2,7 @@ import re
 
 import numpy as np  # noqa E401
 import pandas as pd
+from loguru import logger
 from sklearn.preprocessing import MultiLabelBinarizer as MLB  # noqa E401
 
 from model.collection import load_data
@@ -81,13 +82,16 @@ def get_energy_grades():
 
 def prepare_data() -> pd.DataFrame:
     """Prepares dataset for machine learning training"""
+    logger.info("Preparing data for model training...")
     df = load_data()
 
     # boolean columns → sparse one-hots
+    logger.info("Converting boolean columns to one-hot encoding...")
     bools = ["balcony", "storage", "parking", "furnished", "garage"]
     df = pd.get_dummies(df, columns=bools, drop_first=True, dtype="int8")
 
     # garden
+    logger.info("Converting garden column to int...")
     df["garden"] = df.garden.map(handle_garden_column)
 
     """
@@ -131,10 +135,9 @@ def prepare_data() -> pd.DataFrame:
     """
 
     # drop unecessary columns
+    logger.info("Dropping unnecessary columns...")
     df = df.drop(
         columns=["energy", "facilities", "neighborhood", "address", "zip"]
     )
-
-    print(df.columns)
 
     return df

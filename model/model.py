@@ -1,6 +1,7 @@
 import pickle as pk
 
 import pandas as pd
+from loguru import logger
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV, train_test_split
 
@@ -26,10 +27,13 @@ def train_model(
         "n_estimators": [100, 200, 300],
         "max_depth": [3, 6, 9, 12, 15],
     }
+    logger.info("Training model with grid search...")
+    logger.debug(f"Grid search space: {grid_space}")
     g = GridSearchCV(RandomForestRegressor(), grid_space, cv=5, scoring="r2")
     model_grid = g.fit(X_train, y_train)
 
     best_model = model_grid.best_estimator_
+    logger.debug(f"Best model params: {model_grid.best_params_}")
 
     return best_model
 
@@ -61,18 +65,19 @@ def build_model(
     )
 
     # train
+    logger.info("Training model...")
     rf = train_model(X_train, y_train)
 
     # evaluate
     score = evaluate_model(rf, X_test, y_test)
-    print("Model Score: ", score)
+    logger.info(f"Model score: {score}")
 
     # save
     save_model(rf, model_name=model_name)
+    logger.info(f"Model saved to {settings.model_path}/{model_name}")
 
     return score
 
 
 if __name__ == "__main__":
-    print("building model")
     score = build_model()
