@@ -5,7 +5,7 @@ import pandas as pd
 from loguru import logger
 from sklearn.preprocessing import MultiLabelBinarizer as MLB  # noqa E401
 
-from model.collection import load_data
+from model.collection import load_data_from_db
 
 
 def handle_garden_column(x: pd.Series) -> int:
@@ -83,7 +83,7 @@ def get_energy_grades():
 def prepare_data() -> pd.DataFrame:
     """Prepares dataset for machine learning training"""
     logger.info("Preparing data for model training...")
-    df = load_data()
+    df = load_data_from_db()
 
     # boolean columns → sparse one-hots
     logger.info("Converting boolean columns to one-hot encoding...")

@@ -1,6 +1,7 @@
 from loguru import logger
 from pydantic import DirectoryPath, FilePath
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from sqlalchemy import create_engine
 
 
 class Settings(BaseSettings):
@@ -23,6 +24,10 @@ class Settings(BaseSettings):
     svc_compression: str
     svc_retention: str
 
+    # db
+    db_conn_str: str
+    rent_apartments_table_name: str
+
 
 settings: Settings = Settings()
 logger.add(
@@ -30,4 +35,11 @@ logger.add(
     rotation=settings.svc_rotation,
     compression=settings.svc_compression,
     retention=settings.svc_retention,
+)
+
+# SQLAlchemy engine
+engine = create_engine(
+    settings.db_conn_str,
+    connect_args={"check_same_thread": False},
+    echo=True,
 )
