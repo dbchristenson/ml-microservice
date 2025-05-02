@@ -2,11 +2,11 @@ import pandas as pd
 from loguru import logger
 from sqlalchemy import select
 
-from config import engine, settings
+from config import engine
 from dbmodel import RentApartments
 
 
-def load_data(path=settings.data_file_name) -> pd.DataFrame:
+def load_data(path) -> pd.DataFrame:
     """
     Load data from a CSV file.
 

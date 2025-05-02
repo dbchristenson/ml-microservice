@@ -1,5 +1,5 @@
 from loguru import logger
-from pydantic import DirectoryPath, FilePath
+from pydantic import DirectoryPath
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import create_engine
 
@@ -13,7 +13,6 @@ class Settings(BaseSettings):
     )
 
     # model service
-    data_file_name: FilePath
     model_path: DirectoryPath
     model_name: str
 
