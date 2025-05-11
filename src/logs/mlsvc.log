@@ -1,0 +1,244 @@
+2025-05-11 23:16:32.295 | INFO     | src.model.model_service:load_model:36 - Model exists -> loading model.
+2025-05-11 23:16:32.301 | INFO     | src.model.model_service:load_model:40 - Model loaded successfully.
+2025-05-11 23:16:32.301 | DEBUG    | src.model.model_service:predict:46 - Input parameters for prediction: [85, 2015, 2, 2, 1, 20, 1, 1, 0, 0, 1]
+2025-05-11 23:17:54.104 | WARNING  | src.model.model_service:load_model:33 - Model not found, training a new model.
+2025-05-11 23:17:54.104 | INFO     | src.model.pipeline.preparation:prepare_data:85 - Preparing data for model training...
+2025-05-11 23:17:54.104 | INFO     | src.model.pipeline.collection:load_data_from_db:31 - Loading data from SQLite database
+2025-05-11 23:17:54.105 | ERROR    | __main__:<module>:17 - An error has been caught in function '<module>', process 'MainProcess' (25848), thread 'MainThread' (8554515584):
+Traceback (most recent call last):
+
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+    self._dbapi_connection = engine.raw_connection()
+    │                        │      └ <function Engine.raw_connection at 0x10fec7b00>
+    │                        └ Engine(sqlite:///./data/db.sqlite)
+    └ <sqlalchemy.engine.base.Connection object at 0x11037c830>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+    return self.pool.connect()
+           │    │    └ <function Pool.connect at 0x10fa67380>
+           │    └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+           └ Engine(sqlite:///./data/db.sqlite)
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+           │                │         └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+           │                └ <classmethod(<function _ConnectionFairy._checkout at 0x10fa914e0>)>
+           └ <class 'sqlalchemy.pool.base._ConnectionFairy'>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 1264, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            │                 │        └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+            │                 └ <classmethod(<function _ConnectionRecord.checkout at 0x10fa90040>)>
+            └ <class 'sqlalchemy.pool.base._ConnectionRecord'>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+          │    └ <function QueuePool._do_get at 0x10fa93600>
+          └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/impl.py", line 179, in _do_get
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalc...
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x10ffdce00>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ OperationalError('unable to open database file')
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/impl.py", line 177, in _do_get
+    return self._create_connection()
+           │    └ <function Pool._create_connection at 0x10fa67100>
+           └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+    return _ConnectionRecord(self)
+           │                 └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+           └ <class 'sqlalchemy.pool.base._ConnectionRecord'>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    └ <sqlalchemy.pool.base._ConnectionRecord object at 0x1057112b0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 901, in __connect
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalc...
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x10ffdcd00>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ OperationalError('unable to open database file')
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 897, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+    │    │                               │    │               └ <sqlalchemy.pool.base._ConnectionRecord object at 0x1057112b0>
+    │    │                               │    └ <function create_engine.<locals>.connect at 0x10ff779c0>
+    │    │                               └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+    │    └ <member 'dbapi_connection' of '_ConnectionRecord' objects>
+    └ <sqlalchemy.pool.base._ConnectionRecord object at 0x1057112b0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+    return dialect.connect(*cargs, **cparams)
+           │       │        │        └ {'check_same_thread': False}
+           │       │        └ ['/Users/dbchristenson/Desktop/python/ml-microservice/data/db.sqlite']
+           │       └ <function DefaultDialect.connect at 0x10ff4ff60>
+           └ <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x10ff09fd0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 625, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           │    │            │        │        └ {'check_same_thread': False}
+           │    │            │        └ ('/Users/dbchristenson/Desktop/python/ml-microservice/data/db.sqlite',)
+           │    │            └ <built-in function connect>
+           │    └ <module 'sqlite3.dbapi2' from '/Users/dbchristenson/.local/share/uv/python/cpython-3.13.3-macos-aarch64-none/lib/python3.13/s...
+           └ <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x10ff09fd0>
+
+sqlite3.OperationalError: unable to open database file
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+> File "/Users/dbchristenson/Desktop/python/ml-microservice/runner.py", line 17, in <module>
+    main()
+    └ <function main at 0x105729d00>
+
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/runner.py", line 9, in main
+    ml_svc.load_model()
+    │      └ <function ModelService.load_model at 0x1103719e0>
+    └ <src.model.model_service.ModelService object at 0x11037c1a0>
+
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/src/model/model_service.py", line 34, in load_model
+    build_model(model_name=settings.model_name)
+    │                      │        └ 'rf_db_v3'
+    │                      └ Settings(model_path=PosixPath('src/model/models'), model_name='rf_db_v3', log_path=PosixPath('src/logs'), svc_log_name='mlsvc...
+    └ <function build_model at 0x110371940>
+
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/src/model/pipeline/model.py", line 57, in build_model
+    df = prepare_data()
+         └ <function prepare_data at 0x110371800>
+
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/src/model/pipeline/preparation.py", line 86, in prepare_data
+    df = load_data_from_db()
+         └ <function load_data_from_db at 0x10ffd5c60>
+
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/src/model/pipeline/collection.py", line 33, in load_data_from_db
+    return pd.read_sql(query, engine)
+           │  │        │      └ Engine(sqlite:///./data/db.sqlite)
+           │  │        └ <sqlalchemy.sql.selectable.Select object at 0x11037c2f0>
+           │  └ <function read_sql at 0x10d1acfe0>
+           └ <module 'pandas' from '/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/pandas/__init__...
+
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/pandas/io/sql.py", line 704, in read_sql
+    with pandasSQL_builder(con) as pandas_sql:
+         │                 └ Engine(sqlite:///./data/db.sqlite)
+         └ <function pandasSQL_builder at 0x10d1ad1c0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/pandas/io/sql.py", line 906, in pandasSQL_builder
+    return SQLDatabase(con, schema, need_transaction)
+           │           │    │       └ False
+           │           │    └ None
+           │           └ Engine(sqlite:///./data/db.sqlite)
+           └ <class 'pandas.io.sql.SQLDatabase'>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/pandas/io/sql.py", line 1636, in __init__
+    con = self.exit_stack.enter_context(con.connect())
+          │    │          │             │   └ <function Engine.connect at 0x10fec7a60>
+          │    │          │             └ Engine(sqlite:///./data/db.sqlite)
+          │    │          └ <function _BaseExitStack.enter_context at 0x1051ef9c0>
+          │    └ <contextlib.ExitStack object at 0x11037c6e0>
+          └ <pandas.io.sql.SQLDatabase object at 0x11037c590>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3274, in connect
+    return self._connection_cls(self)
+           │    │               └ Engine(sqlite:///./data/db.sqlite)
+           │    └ <class 'sqlalchemy.engine.base.Connection'>
+           └ Engine(sqlite:///./data/db.sqlite)
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 148, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    │          └ <classmethod(<function Connection._handle_dbapi_exception_noconnection at 0x10fec5300>)>
+    └ <class 'sqlalchemy.engine.base.Connection'>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2439, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+          │                    │              │                 └ OperationalError('unable to open database file')
+          │                    │              └ (<class 'sqlite3.OperationalError'>, OperationalError('unable to open database file'), <traceback object at 0x10ff7e3c0>)
+          │                    └ <method 'with_traceback' of 'BaseException' objects>
+          └ OperationalError('(sqlite3.OperationalError) unable to open database file')
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+    self._dbapi_connection = engine.raw_connection()
+    │                        │      └ <function Engine.raw_connection at 0x10fec7b00>
+    │                        └ Engine(sqlite:///./data/db.sqlite)
+    └ <sqlalchemy.engine.base.Connection object at 0x11037c830>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3298, in raw_connection
+    return self.pool.connect()
+           │    │    └ <function Pool.connect at 0x10fa67380>
+           │    └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+           └ Engine(sqlite:///./data/db.sqlite)
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+           │                │         └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+           │                └ <classmethod(<function _ConnectionFairy._checkout at 0x10fa914e0>)>
+           └ <class 'sqlalchemy.pool.base._ConnectionFairy'>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 1264, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            │                 │        └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+            │                 └ <classmethod(<function _ConnectionRecord.checkout at 0x10fa90040>)>
+            └ <class 'sqlalchemy.pool.base._ConnectionRecord'>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 713, in checkout
+    rec = pool._do_get()
+          │    └ <function QueuePool._do_get at 0x10fa93600>
+          └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/impl.py", line 179, in _do_get
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalc...
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x10ffdce00>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ OperationalError('unable to open database file')
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/impl.py", line 177, in _do_get
+    return self._create_connection()
+           │    └ <function Pool._create_connection at 0x10fa67100>
+           └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+    return _ConnectionRecord(self)
+           │                 └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+           └ <class 'sqlalchemy.pool.base._ConnectionRecord'>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 675, in __init__
+    self.__connect()
+    └ <sqlalchemy.pool.base._ConnectionRecord object at 0x1057112b0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 901, in __connect
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalc...
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x10ffdcd00>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ OperationalError('unable to open database file')
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 897, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+    │    │                               │    │               └ <sqlalchemy.pool.base._ConnectionRecord object at 0x1057112b0>
+    │    │                               │    └ <function create_engine.<locals>.connect at 0x10ff779c0>
+    │    │                               └ <sqlalchemy.pool.impl.QueuePool object at 0x10ff0aba0>
+    │    └ <member 'dbapi_connection' of '_ConnectionRecord' objects>
+    └ <sqlalchemy.pool.base._ConnectionRecord object at 0x1057112b0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/create.py", line 646, in connect
+    return dialect.connect(*cargs, **cparams)
+           │       │        │        └ {'check_same_thread': False}
+           │       │        └ ['/Users/dbchristenson/Desktop/python/ml-microservice/data/db.sqlite']
+           │       └ <function DefaultDialect.connect at 0x10ff4ff60>
+           └ <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x10ff09fd0>
+  File "/Users/dbchristenson/Desktop/python/ml-microservice/.venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 625, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           │    │            │        │        └ {'check_same_thread': False}
+           │    │            │        └ ('/Users/dbchristenson/Desktop/python/ml-microservice/data/db.sqlite',)
+           │    │            └ <built-in function connect>
+           │    └ <module 'sqlite3.dbapi2' from '/Users/dbchristenson/.local/share/uv/python/cpython-3.13.3-macos-aarch64-none/lib/python3.13/s...
+           └ <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x10ff09fd0>
+
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-11 23:19:03.147 | WARNING  | src.model.model_service:load_model:33 - Model not found, training a new model.
+2025-05-11 23:19:03.147 | INFO     | src.model.pipeline.preparation:prepare_data:85 - Preparing data for model training...
+2025-05-11 23:19:03.147 | INFO     | src.model.pipeline.collection:load_data_from_db:31 - Loading data from SQLite database
+2025-05-11 23:19:03.157 | INFO     | src.model.pipeline.preparation:prepare_data:89 - Converting boolean columns to one-hot encoding...
+2025-05-11 23:19:03.160 | INFO     | src.model.pipeline.preparation:prepare_data:94 - Converting garden column to int...
+2025-05-11 23:19:03.161 | INFO     | src.model.pipeline.preparation:prepare_data:138 - Dropping unnecessary columns...
+2025-05-11 23:19:03.162 | INFO     | src.model.pipeline.model:build_model:68 - Training model...
+2025-05-11 23:19:03.162 | INFO     | src.model.pipeline.model:train_model:30 - Training model with grid search...
+2025-05-11 23:19:03.162 | DEBUG    | src.model.pipeline.model:train_model:31 - Grid search space: {'n_estimators': [100, 200, 300], 'max_depth': [3, 6, 9, 12, 15]}
+2025-05-11 23:19:16.746 | DEBUG    | src.model.pipeline.model:train_model:36 - Best model params: {'max_depth': 15, 'n_estimators': 300}
+2025-05-11 23:19:16.760 | INFO     | src.model.pipeline.model:build_model:73 - Model score: 0.8091344180677632
+2025-05-11 23:19:16.770 | INFO     | src.model.pipeline.model:build_model:77 - Model saved to src/model/models/rf_db_v3
+2025-05-11 23:19:16.772 | INFO     | src.model.model_service:load_model:36 - Model exists -> loading model.
+2025-05-11 23:19:16.779 | INFO     | src.model.model_service:load_model:40 - Model loaded successfully.
+2025-05-11 23:19:16.779 | DEBUG    | src.model.model_service:predict:46 - Input parameters for prediction: [85, 2015, 2, 2, 1, 20, 1, 1, 0, 0, 1]
