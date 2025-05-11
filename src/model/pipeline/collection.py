@@ -2,8 +2,8 @@ import pandas as pd
 from loguru import logger
 from sqlalchemy import select
 
-from config import engine
-from dbmodel import RentApartments
+from src.config.config import engine
+from src.db.db_model import RentApartments
 
 
 def load_data(path) -> pd.DataFrame:

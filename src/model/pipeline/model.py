@@ -5,8 +5,8 @@ from loguru import logger
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV, train_test_split
 
-from config import settings
-from model.preparation import prepare_data
+from src.config.config import settings
+from src.model.pipeline.preparation import prepare_data
 
 
 def get_X_y(df: pd.DataFrame, x_cols: list | None = None) -> tuple:

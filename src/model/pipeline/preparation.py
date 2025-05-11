@@ -5,7 +5,7 @@ import pandas as pd
 from loguru import logger
 from sklearn.preprocessing import MultiLabelBinarizer as MLB  # noqa E401
 
-from model.collection import load_data_from_db
+from src.model.pipeline.collection import load_data_from_db
 
 
 def handle_garden_column(x: pd.Series) -> int:

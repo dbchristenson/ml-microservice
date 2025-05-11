@@ -5,8 +5,8 @@ from pathlib import Path
 from loguru import logger
 from sklearn.ensemble import RandomForestRegressor
 
-from config import settings
-from model.model import build_model
+from src.config.config import settings
+from src.model.pipeline.model import build_model
 
 
 class ModelService:

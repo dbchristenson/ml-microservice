@@ -1,7 +1,7 @@
 from sqlalchemy import INTEGER, REAL, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-from config import settings
+from src.config.config import settings
 
 
 class Base(DeclarativeBase):
