@@ -1,3 +1,11 @@
+"""
+This module contains functions to prepare the dataset for machine learning.
+It includes functions to handle specific columns, clean facility names,
+and prepare the data for training. The functions are designed to be used
+in a pipeline to ensure that the data is in the correct format and
+ready for modeling.
+"""
+
 import re
 
 import numpy as np  # noqa E401
@@ -8,21 +16,45 @@ from sklearn.preprocessing import MultiLabelBinarizer as MLB  # noqa E401
 from src.model.pipeline.collection import load_data_from_db
 
 
-def handle_garden_column(x: pd.Series) -> int:
-    """Handles the 'garden' column in the dataset"""
+def _handle_garden_column(x: pd.Series) -> int:
+    """
+    Handles the 'garden' column in the dataset.
+
+    Args:
+        x (pd.Series): The value of the 'garden' column.
+
+    Returns:
+        int: 1 if the garden is present, 0 otherwise.
+    """
     if x == "Not present":
         return 0
 
     return int(re.findall(r"\d+", x)[0])
 
 
-def handle_neighborhood_column(x: pd.Series) -> str:
-    """Handles the 'neighborhood' column in the dataset"""
+def _handle_neighborhood_column(x: pd.Series) -> str:
+    """
+    Handles the 'neighborhood' column in the dataset.
+
+    Args:
+        x (pd.Series): The value of the 'neighborhood' column.
+
+    Returns:
+        str: The neighborhood name.
+    """
     return x.split()[0]
 
 
-def clean_fac(tokens: str) -> list:
-    """Gets a clean, normalized list of facilities on the property"""
+def _clean_fac(tokens: str) -> list:
+    """
+    Gets a clean, normalized list of facilities on the property.
+
+    Args:
+        tokens (str): The string of facilities.
+
+    Returns:
+        list: A list of cleaned facility names.
+    """
     if isinstance(tokens, float):
         return []
 
@@ -37,8 +69,16 @@ def clean_fac(tokens: str) -> list:
     return res
 
 
-def get_cleaned_facility_list(df: pd.DataFrame):
-    """Gets a cleaned set of all unique facilities in the data"""
+def _get_cleaned_facility_list(df: pd.DataFrame) -> list:
+    """
+    Gets a cleaned set of all unique facilities in the data
+
+    Args:
+        df (pd.DataFrame): The DataFrame containing the facilities data.
+
+    Returns:
+        list: A list of cleaned facility names.
+    """
     facilities_set = set()
 
     for s in df.facilities.values:
@@ -81,18 +121,29 @@ def get_energy_grades():
 
 
 def prepare_data() -> pd.DataFrame:
-    """Prepares dataset for machine learning training"""
+    """
+    Prepares dataset for machine learning training
+
+    This function loads data from a SQLite database, processes the data,
+    and returns a cleaned DataFrame ready for model training. It handles
+    boolean columns, garden information, and drops unnecessary columns.
+    It also includes commented-out sections for additional processing
+    that may be added in the future.
+
+    Returns:
+        pd.DataFrame: Cleaned DataFrame ready for model training.
+    """
     logger.info("Preparing data for model training...")
     df = load_data_from_db()
 
-    # boolean columns → sparse one-hots
+    # boolean columns → one-hot encoding
     logger.info("Converting boolean columns to one-hot encoding...")
     bools = ["balcony", "storage", "parking", "furnished", "garage"]
     df = pd.get_dummies(df, columns=bools, drop_first=True, dtype="int8")
 
     # garden
     logger.info("Converting garden column to int...")
-    df["garden"] = df.garden.map(handle_garden_column)
+    df["garden"] = df.garden.map(_handle_garden_column)
 
     """
     This code is commented out because it highly complicates the inputs
@@ -136,8 +187,6 @@ def prepare_data() -> pd.DataFrame:
 
     # drop unecessary columns
     logger.info("Dropping unnecessary columns...")
-    df = df.drop(
-        columns=["energy", "facilities", "neighborhood", "address", "zip"]
-    )
+    df = df.drop(columns=["energy", "facilities", "neighborhood", "address", "zip"])
 
     return df

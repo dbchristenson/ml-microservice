@@ -1,3 +1,13 @@
+"""
+This module contains functions to train, evaluate, and save a model.
+
+It uses the RandomForestRegressor from sklearn and the Loguru library
+for logging. The model is trained using grid search for hyperparameter tuning,
+and the best model is saved to disk. The module also includes functions to
+split the data into features and target, evaluate the model, and save the model
+to disk.
+"""
+
 import pickle as pk
 
 import pandas as pd
@@ -9,7 +19,18 @@ from src.config.config import settings
 from src.model.pipeline.preparation import prepare_data
 
 
-def get_X_y(df: pd.DataFrame, x_cols: list | None = None) -> tuple:
+def _get_X_y(df: pd.DataFrame, x_cols: list | None = None) -> tuple:
+    """
+    Splits the DataFrame into features (X) and target (y).
+
+    Args:
+        df (pd.DataFrame): DataFrame containing the data.
+        x_cols (list | None): List of feature columns. If None, all columns " \
+                              "except 'rent' are used."
+
+    Returns:
+        tuple: Tuple with the features DataFrame (X) and target Series (y).
+    """
     if not x_cols:
         X_df = df.drop(columns=["rent"])
     if x_cols:
@@ -20,9 +41,22 @@ def get_X_y(df: pd.DataFrame, x_cols: list | None = None) -> tuple:
     return X_df, y_df
 
 
-def train_model(
-    X_train: pd.DataFrame, y_train: pd.DataFrame
-) -> RandomForestRegressor:
+def _train_model(X_train: pd.DataFrame, y_train: pd.DataFrame) -> RandomForestRegressor:
+    """
+    Trains a RFRegressor model using grid search for parameter tuning.
+
+    This function performs a grid search over the specified hyperparameters
+    to find the best model. The grid search is performed using cross-validation
+    to ensure that the model is robust and generalizes well to unseen data.
+    The best model is then returned.
+
+    Args:
+        X_train (pd.DataFrame): Training features DataFrame.
+        y_train (pd.DataFrame): Training target Series.
+
+    Returns:
+        RandomForestRegressor: The trained model.
+    """
     grid_space = {
         "n_estimators": [100, 200, 300],
         "max_depth": [3, 6, 9, 12, 15],
@@ -38,26 +72,24 @@ def train_model(
     return best_model
 
 
-def evaluate_model(
+def _evaluate_model(
     model: RandomForestRegressor, X_test: pd.DataFrame, y_test: pd.DataFrame
 ):
     score = model.score(X_test, y_test)
     return score
 
 
-def save_model(model: RandomForestRegressor, model_name: str) -> None:
+def _save_model(model: RandomForestRegressor, model_name: str) -> None:
     # could add os create dir logic here
     pk.dump(model, open(f"{settings.model_path}/{model_name}", "wb"))
 
 
-def build_model(
-    x_cols: list | None = None, model_name: str = settings.model_name
-):
+def build_model(x_cols: list | None = None, model_name: str = settings.model_name):
     # load data
     df = prepare_data()
 
     # split vars and target
-    X_df, y_df = get_X_y(df, x_cols)
+    X_df, y_df = _get_X_y(df, x_cols)
 
     # get tts
     X_train, X_test, y_train, y_test = train_test_split(
@@ -66,14 +98,14 @@ def build_model(
 
     # train
     logger.info("Training model...")
-    rf = train_model(X_train, y_train)
+    rf = _train_model(X_train, y_train)
 
     # evaluate
-    score = evaluate_model(rf, X_test, y_test)
+    score = _evaluate_model(rf, X_test, y_test)
     logger.info(f"Model score: {score}")
 
     # save
-    save_model(rf, model_name=model_name)
+    _save_model(rf, model_name=model_name)
     logger.info(f"Model saved to {settings.model_path}/{model_name}")
 
     return score
