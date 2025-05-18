@@ -1,2 +1,12 @@
-2025-05-13 23:30:21.422 | INFO     | src.model.model_service:load_model:55 - Model exists -> loading model.
-2025-05-13 23:30:21.430 | INFO     | src.model.model_service:load_model:59 - Model loaded successfully.
+2025-05-18 23:38:48.145 | INFO     | src.model.model_service:load_model:55 - Model exists -> loading model.
+2025-05-18 23:38:48.167 | INFO     | src.model.model_service:load_model:64 - Model loaded successfully.
+2025-05-18 23:38:48.179 | INFO     | __main__:main:11 - Prediction: [2070.53373016]
+2025-05-18 23:40:20.799 | INFO     | src.model.model_service:load_model:55 - Model exists -> loading model.
+2025-05-18 23:40:20.807 | INFO     | src.model.model_service:load_model:64 - Model loaded successfully.
+2025-05-18 23:40:20.813 | INFO     | __main__:main:11 - Prediction: [2070.53373016]
+2025-05-18 23:41:32.776 | INFO     | src.model.model_service:load_model:55 - Model exists -> loading model.
+2025-05-18 23:41:32.788 | INFO     | src.model.model_service:load_model:64 - Model loaded successfully.
+2025-05-18 23:41:32.794 | INFO     | __main__:main:11 - Prediction: [2070.53373016]
+2025-05-18 23:43:37.533 | INFO     | src.model.model_service:load_model:55 - Model exists -> loading model.
+2025-05-18 23:43:37.540 | INFO     | src.model.model_service:load_model:64 - Model loaded successfully.
+2025-05-18 23:43:37.546 | INFO     | __main__:main:11 - Prediction: [2070.53373016]
