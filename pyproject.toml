@@ -5,6 +5,7 @@ description = "E2E machine learning microservice demonstration"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "black>=25.1.0",
     "loguru>=0.7.3",
     "pandas>=2.2.3",
     "pydantic>=2.11.3",
@@ -12,6 +13,7 @@ dependencies = [
     "scikit-learn>=1.6.1",
     "seaborn>=0.13.2",
     "sqlalchemy>=2.0.40",
+    "wemake-python-styleguide>=1.1.0",
 ]
 
 [dependency-groups]
