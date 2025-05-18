@@ -41,7 +41,9 @@ def _get_X_y(df: pd.DataFrame, x_cols: list | None = None) -> tuple:
     return X_df, y_df
 
 
-def _train_model(X_train: pd.DataFrame, y_train: pd.DataFrame) -> RandomForestRegressor:
+def _train_model(
+    X_train: pd.DataFrame, y_train: pd.DataFrame
+) -> RandomForestRegressor:
     """
     Trains a RFRegressor model using grid search for parameter tuning.
 
@@ -63,8 +65,10 @@ def _train_model(X_train: pd.DataFrame, y_train: pd.DataFrame) -> RandomForestRe
     }
     logger.info("Training model with grid search...")
     logger.debug(f"Grid search space: {grid_space}")
-    g = GridSearchCV(RandomForestRegressor(), grid_space, cv=5, scoring="r2")
-    model_grid = g.fit(X_train, y_train)
+    grid_search = GridSearchCV(
+        RandomForestRegressor(), grid_space, cv=5, scoring="r2"
+    )
+    model_grid = grid_search.fit(X_train, y_train)
 
     best_model = model_grid.best_estimator_
     logger.debug(f"Best model params: {model_grid.best_params_}")
@@ -81,10 +85,16 @@ def _evaluate_model(
 
 def _save_model(model: RandomForestRegressor, model_name: str) -> None:
     # could add os create dir logic here
-    pk.dump(model, open(f"{settings.model_path}/{model_name}", "wb"))
+    with open(f"{settings.model_path}/{model_name}", "wb") as writer:
+        pk.dump(model, writer)
 
 
-def build_model(x_cols: list | None = None, model_name: str = settings.model_name):
+def build_model(  # noqa: WPS210
+    x_cols: list | None = None,
+    model_name: str = settings.model_name,
+    train_size: float = 0.8,
+    test_size: float = 0.2,
+):
     # load data
     df = prepare_data()
 
@@ -93,7 +103,7 @@ def build_model(x_cols: list | None = None, model_name: str = settings.model_nam
 
     # get tts
     X_train, X_test, y_train, y_test = train_test_split(
-        X_df, y_df, train_size=0.8, test_size=0.2
+        X_df, y_df, train_size=train_size, test_size=test_size
     )
 
     # train

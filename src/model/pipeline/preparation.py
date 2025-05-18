@@ -16,33 +16,33 @@ from sklearn.preprocessing import MultiLabelBinarizer as MLB  # noqa E401
 from src.model.pipeline.collection import load_data_from_db
 
 
-def _handle_garden_column(x: pd.Series) -> int:
+def _handle_garden_column(x_series: pd.Series) -> int:
     """
     Handles the 'garden' column in the dataset.
 
     Args:
-        x (pd.Series): The value of the 'garden' column.
+        x_series (pd.Series): The value of the 'garden' column.
 
     Returns:
         int: 1 if the garden is present, 0 otherwise.
     """
-    if x == "Not present":
+    if x_series == "Not present":
         return 0
 
-    return int(re.findall(r"\d+", x)[0])
+    return int(re.findall(r"\d+", x_series)[0])
 
 
-def _handle_neighborhood_column(x: pd.Series) -> str:
+def _handle_neighborhood_column(x_series: pd.Series) -> str:
     """
     Handles the 'neighborhood' column in the dataset.
 
     Args:
-        x (pd.Series): The value of the 'neighborhood' column.
+        x_series (pd.Series): The value of the 'neighborhood' column.
 
     Returns:
         str: The neighborhood name.
     """
-    return x.split()[0]
+    return x_series.split()[0]
 
 
 def _clean_fac(tokens: str) -> list:
@@ -81,13 +81,13 @@ def _get_cleaned_facility_list(df: pd.DataFrame) -> list:
     """
     facilities_set = set()
 
-    for s in df.facilities.values:
+    for str in df.facilities.values:
         try:
-            s = s.lower()
+            str = str.lower()
         except AttributeError:
             continue
 
-        facility_list = s.split(",")
+        facility_list = str.split(",")
         for facility in facility_list:
             facilities_set.add(facility.strip())
 
@@ -187,6 +187,8 @@ def prepare_data() -> pd.DataFrame:
 
     # drop unecessary columns
     logger.info("Dropping unnecessary columns...")
-    df = df.drop(columns=["energy", "facilities", "neighborhood", "address", "zip"])
+    df = df.drop(
+        columns=["energy", "facilities", "neighborhood", "address", "zip"]
+    )
 
     return df

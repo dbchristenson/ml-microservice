@@ -44,7 +44,9 @@ class ModelService:
 
         If the model does not exist, it will train a new model.
         """
-        model_path = Path(os.path.join(settings.model_path, settings.model_name))
+        model_path = Path(
+            os.path.join(settings.model_path, settings.model_name)
+        )
 
         if not model_path.exists():
             logger.warning("Model not found, training a new model.")
@@ -53,11 +55,13 @@ class ModelService:
         logger.info("Model exists -> loading model.")
 
         try:
-            self.model: RandomForestRegressor = pk.load(open(model_path, "rb"))
-            logger.info("Model loaded successfully.")
-        except Exception as e:
-            logger.critical(f"Error loading model: {e}")
+            with open(model_path, "rb") as f:
+                self.model: RandomForestRegressor = pk.load(f)
+        except Exception as exception:
+            logger.critical(f"Error loading model: {exception}")
             raise
+
+        logger.info("Model loaded successfully.")
 
     def predict(self, input_parameters: list) -> float:
         """
@@ -76,5 +80,5 @@ class ModelService:
 if __name__ == "__main__":
     ml_svc = ModelService()
     ml_svc.load_model("rf_v3")
-    pred = ml_svc.predict([85, 2015, 2, 2, 1, 20, 1, 1, 0, 0, 1])
-    print(f"Predicted Rental Price: {pred}")
+    prediction = ml_svc.predict([85, 2015, 2, 2, 1, 20, 1, 1, 0, 0, 1])
+    logger(f"Predicted Rental Price: {prediction}")
