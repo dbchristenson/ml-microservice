@@ -55,8 +55,8 @@ class ModelService:
         logger.info("Model exists -> loading model.")
 
         try:
-            with open(model_path, "rb") as f:
-                self.model: RandomForestRegressor = pk.load(f)
+            with open(model_path, "rb") as model_file:
+                self.model: RandomForestRegressor = pk.load(model_file)
         except Exception as exception:
             logger.critical(f"Error loading model: {exception}")
             raise
@@ -75,10 +75,3 @@ class ModelService:
         """
         logger.debug(f"Input parameters for prediction: {input_parameters}")
         return self.model.predict([input_parameters])
-
-
-if __name__ == "__main__":
-    ml_svc = ModelService()
-    ml_svc.load_model("rf_v3")
-    prediction = ml_svc.predict([85, 2015, 2, 2, 1, 20, 1, 1, 0, 0, 1])
-    logger(f"Predicted Rental Price: {prediction}")
