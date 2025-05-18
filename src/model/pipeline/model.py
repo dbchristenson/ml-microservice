@@ -89,7 +89,7 @@ def _save_model(model: RandomForestRegressor, model_name: str) -> None:
         pk.dump(model, writer)
 
 
-def build_model(  # noqa: WPS210
+def build_model(
     x_cols: list | None = None,
     model_name: str = settings.model_name,
     train_size: float = 0.8,
