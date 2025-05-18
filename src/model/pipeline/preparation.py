@@ -8,10 +8,10 @@ ready for modeling.
 
 import re
 
-import numpy as np  # noqa E401
+import numpy as np
 import pandas as pd
 from loguru import logger
-from sklearn.preprocessing import MultiLabelBinarizer as MLB  # noqa E401
+from sklearn.preprocessing import MultiLabelBinarizer as MLB
 
 from src.model.pipeline.collection import load_data_from_db
 
