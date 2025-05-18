@@ -12,6 +12,6 @@ clean:
 	rm -rf .ruff_cache
 
 check:
-	uv run ruff check .
+	uv run flake8 .
 
 runner: check run clean
